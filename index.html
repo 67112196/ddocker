@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        nav {
+            background: #2d3748;
+            padding: 15px 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        nav button {
+            background: transparent;
+            border: 2px solid #4a5568;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        nav button:hover, nav button.active {
+            background: #667eea;
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 40px;
+            min-height: 400px;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Home Page Styles */
+        .profile {
+            text-align: center;
+        }
+
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 36px;
+        }
+
+        .student-id {
+            color: #667eea;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        /* Git & Docker Pages */
+        .content-section h1 {
+            color: #2d3748;
+            margin-bottom: 30px;
+            font-size: 32px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .content-section h2 {
+            color: #667eea;
+            margin: 25px 0 15px;
+            font-size: 24px;
+        }
+
+        .content-section p {
+            line-height: 1.8;
+            color: #4a5568;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .content-section ul {
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+
+        .content-section li {
+            line-height: 1.8;
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .image-placeholder {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            border-radius: 10px;
+            padding: 60px 20px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+            border: 2px dashed #d1d5db;
+        }
+
+        .back-link {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        code {
+            background: #f3f4f6;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #e53e3e;
+        }
+
+        .command-box {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <button onclick="navigate('home')" class="active" id="nav-home">🏠 Home</button>
+            <button onclick="navigate('git')" id="nav-git">📚 Git</button>
+            <button onclick="navigate('docker')" id="nav-docker">🐳 Docker</button>
+        </nav>
+
+        <div class="content">
+            <!-- Home Page -->
+            <div id="home" class="page active">
+                <div class="profile">
+                    <div class="profile-image">👨‍🎓</div>
+                    <h1>ชื่อ ซามูเอล แอล</h1>
+                    <p class="student-id">รหัสนักศึกษา: 6711XXXX</p>
+                    <p style="color: #718096; font-size: 18px; margin-top: 20px;">
+                        นักศึกษาสาขาวิทยาการคอมพิวเตอร์<br>
+                        ผู้สนใจในการพัฒนา Web Application และ DevOps
+                    </p>
+                    <div class="links">
+                        <a href="#" onclick="navigate('git'); return false;" class="btn">
+                            📚 เรียนรู้ Git
+                        </a>
+                        <a href="#" onclick="navigate('docker'); return false;" class="btn">
+                            🐳 เรียนรู้ Docker
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Git Page -->
+            <div id="git" class="page content-section">
+                <h1>📚 Git & GitHub</h1>
+                
+                <h2>Git คือ อะไร?</h2>
+                <p>Git เป็น Version Control System ที่ช่วยในการจัดการและติดตามการเปลี่ยนแปลงของ Source Code ทำให้นักพัฒนาสามารถทำงานร่วมกันได้อย่างมีประสิทธิภาพ</p>
+
+                <h2>คำสั่ง Git พื้นฐาน</h2>
+                <ul>
+                    <li><code>git init</code> - สร้าง Git repository ใหม่</li>
+                    <li><code>git clone [url]</code> - คัดลอก repository จาก remote</li>
+                    <li><code>git add .</code> - เพิ่มไฟล์ทั้งหมดเข้า staging area</li>
+                    <li><code>git commit -m "message"</code> - บันทึกการเปลี่ยนแปลง</li>
+                    <li><code>git push</code> - ส่งการเปลี่ยนแปลงไปยัง remote repository</li>
+                    <li><code>git pull</code> - ดึงการเปลี่ยนแปลงจาก remote repository</li>
+                    <li><code>git branch</code> - แสดงและจัดการ branch</li>
+                    <li><code>git merge</code> - รวม branch เข้าด้วยกัน</li>
+                </ul>
+
+                <h2>GitHub คือ อะไร?</h2>
+                <p>GitHub เป็นแพลตฟอร์มสำหรับจัดเก็บและแชร์ source code โดยใช้ Git เป็นระบบควบคุม มีฟีเจอร์เสริมมากมาย เช่น Issues, Pull Requests, และ GitHub Actions</p>
+
+                <div class="image-grid">
+                    <div class="image-placeholder">
+                        🔄<br>Git Workflow<br>
+                        (ภาพแสดง Working Directory,<br>Staging Area, Repository)
+                    </div>
+                    <div class="image-placeholder">
+                        🌿<br>Git Branching<br>
+                        (ภาพแสดงการแตก branch<br>และ merge)
+                    </div>
+                </div>
+
+                <h2>ตัวอย่างการใช้งาน</h2>
+                <div class="command-box">
+# เริ่มต้น Git repository<br>
+git init<br><br>
+# เพิ่มไฟล์เข้า staging<br>
+git add .<br><br>
+# Commit การเปลี่ยนแปลง<br>
+git commit -m "Initial commit"<br><br>
+# เชื่อมต่อกับ GitHub<br>
+git remote add origin https://github.com/username/repo.git<br><br>
+# Push ขึ้น GitHub<br>
+git push -u origin main
+                </div>
+
+                <div class="back-link">
+                    <a href="#" onclick="navigate('home'); return false;" class="btn">← กลับหน้าหลัก</a>
+                </div>
+            </div>
+
+            <!-- Docker Page -->
+            <div id="docker" class="page content-section">
+                <h1>🐳 Docker</h1>
+                
+                <h2>Docker คือ อะไร?</h2>
+                <p>Docker เป็นแพลตฟอร์มสำหรับการพัฒนา จัดส่ง และรัน Application ภายใน Container ทำให้การ Deploy Application มีความสะดวกและรวดเร็วมากขึ้น โดยไม่ต้องกังวลเรื่องความแตกต่างของสภาพแวดล้อม</p>
+
+                <h2>ส่วนประกอบสำคัญของ Docker</h2>
+                <ul>
+                    <li><strong>Image</strong> - Template สำหรับสร้าง Container ประกอบด้วย Application และ Dependencies ทั้งหมด</li>
+                    <li><strong>Container</strong> - Instance ที่รันจาก Image เปรียบเสมือน Application ที่กำลังทำงาน</li>
+                    <li><strong>Dockerfile</strong> - ไฟล์สำหรับกำหนดขั้นตอนการสร้าง Image</li>
+                    <li><strong>Docker Hub</strong> - Repository สำหรับเก็บและแชร์ Docker Images</li>
+                </ul>
+
+                <h2>การสร้าง Docker Image</h2>
+                <p>ใช้ไฟล์ <code>Dockerfile</code> เพื่อกำหนดขั้นตอนการสร้าง Image:</p>
+                <div class="command-box">
+# ตัวอย่าง Dockerfile<br>
+FROM nginx:alpine<br>
+COPY . /usr/share/nginx/html<br>
+EXPOSE 80<br>
+CMD ["nginx", "-g", "daemon off;"]
+                </div>
+
+                <h2>คำสั่ง Docker พื้นฐาน</h2>
+                <ul>
+                    <li><code>docker build -t image-name .</code> - สร้าง image จาก Dockerfile</li>
+                    <li><code>docker run -p 8080:80 image-name</code> - รัน container จาก image</li>
+                    <li><code>docker ps</code> - แสดง container ที่กำลังทำงาน</li>
+                    <li><code>docker ps -a</code> - แสดง container ทั้งหมด</li>
+                    <li><code>docker images</code> - แสดง image ทั้งหมด</li>
+                    <li><code>docker stop [container-id]</code> - หยุดการทำงานของ container</li>
+                    <li><code>docker logs [container-id]</code> - ดู log ของ container</li>
+                    <li><code>docker exec -it [container-id] sh</code> - เข้าใช้งาน shell ใน container</li>
+                </ul>
+
+                <h2>การตรวจสอบการทำงาน</h2>
+                <div class="command-box">
+# ตรวจสอบ container ที่รันอยู่<br>
+docker ps<br><br>
+# ดู log<br>
+docker logs [container-id]<br><br>
+# ตรวจสอบ resource usage<br>
+docker stats<br><br>
+# ดูรายละเอียด container<br>
+docker inspect [container-id]
+                </div>
+
+                <div class="image-grid">
+                    <div class="image-placeholder">
+                        📦<br>Docker Architecture<br>
+                        (ภาพแสดง Docker Client,<br>Docker Daemon, Registry)
+                    </div>
+                    <div class="image-placeholder">
+                        🔄<br>Container Lifecycle<br>
+                        (ภาพแสดงขั้นตอนการสร้าง<br>และรัน Container)
+                    </div>
+                </div>
+
+                <h2>การ Push Image ไป Docker Hub</h2>
+                <div class="command-box">
+# Login เข้า Docker Hub<br>
+docker login<br><br>
+# Tag image<br>
+docker tag image-name username/image-name:tag<br><br>
+# Push ขึ้น Docker Hub<br>
+docker push username/image-name:tag
+                </div>
+
+                <div class="back-link">
+                    <a href="#" onclick="navigate('home'); return false;" class="btn">← กลับหน้าหลัก</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function navigate(page) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(page).classList.add('active');
+            document.getElementById('nav-' + page).classList.add('active');
+            
+            // Update URL without reload
+            history.pushState({page: page}, '', '/' + (page === 'home' ? '' : page));
+        }
+
+        // Handle browser back/forward
+        window.addEventListener('popstate', function(e) {
+            if (e.state && e.state.page) {
+                navigate(e.state.page);
+            }
+        });
+
+        // Initialize on load
+        window.addEventListener('load', function() {
+            const path = window.location.pathname;
+            if (path === '/git') navigate('git');
+            else if (path === '/docker') navigate('docker');
+            else navigate('home');
+        });
+    </script>
+</body>
+</html>
